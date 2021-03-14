@@ -1,38 +1,63 @@
-ButtonGroup hovering_button_group;  // The button group on which the mouse is being hovered on. //<>//
+ButtonGroup hovering_button_group;  // The button group on which the mouse is being hovered on. //<>// //<>//
 Button hovering_button;  // The button on which the mouse is being hovered on.
 
 class Button extends Box {
   color fill_c, active_c, hovering_c, default_c;  // All the various colours of a button.
   boolean active;  // Determines if a button is active or not.
+  Action action;  // To trigger an event on being pressed.
+  int id;  // Identifier of the button to figure out which action it corresponds to.
 
-  Button(int x, int y, int w, int h) {
+  Button(int x, int y, int w, int h, Action action_, int id_) {
     super(x, y, w, h);  // Constructor of the base class "Box".
-  
+    action = action_;
+    id = id_;
+
     // Initialize colours.
     active_c = color(#be2f29);
     hovering_c = color(255);
     default_c = color(#ecaf44);
-    
+
     // fill_c determines which colour the button willl have.
     fill_c = default_c;  // Set the fill colour to the default colour.
   }
-  
+
+  void activate() {
+    action.on_activate(id);
+    active = true;
+  }
+
+  void deactivate() {
+    action.on_deactivate(id);
+    active = false;
+  }
+
+  void toggle_activation() {
+    // Call the appropriate event handler
+    // and toggle activation.
+    if (active) {
+      action.on_deactivate(id);
+    } else {
+      action.on_activate(id);
+    }
+    active = !active;
+  }
+
   // Render the button.
   void render() {
     fill_c = default_c;  // Set the fill colour to the default colour.
-    
+
     // If we are hovering on top of the button, set hovering_button to an instance of this object
     // and set the fill colour (fill_c) appropriately.
     if (hovering_button == null && mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
       hovering_button = this;
       fill_c = hovering_c;
     }
-     //<>//
+
     // If the button is active, override any other colour and set it to active_c.
-    if (active) {      
+    if (active) {
       fill_c = active_c;
     }
-    
+
     // Finally, render the button.
     noStroke();  // Button won't have borders.
     fill(fill_c);  // Set the button's colour.
@@ -48,16 +73,16 @@ class ButtonGroup extends Box {
   int n;  // Number of buttons in the group.
   Button[] buttons;  // The array which contains the buttons.
 
-  ButtonGroup(int x, int y, int w, int h, int n_, int default_active, int px, int py) {
+  ButtonGroup(int x, int y, int w, int h, Action action_handler, int n_, int default_active, int px, int py) {
     super(x, y, w, h);  // Constructor of the base class "Box".
     n = n_;
-    
+
     // Initialize all buttons with appropriate positions and sizes
     buttons = new Button[n];
     int b_w = w - (2 * px);
     int b_h = (h - ((n + 1) * py)) / n;
     for (int i = 0; i < buttons.length; i++) {
-      buttons[i] = new Button(x + px, y + (i + 1) * py + (i * b_h), b_w, b_h);
+      buttons[i] = new Button(x + px, y + (i + 1) * py + (i * b_h), b_w, b_h, action_handler, i);
     }
 
     // Set a button to be active by default. The button which is activated determines on
@@ -65,7 +90,7 @@ class ButtonGroup extends Box {
     // one button is active when the button group is created (0 buttons active = bad state).
     buttons[default_active].active = true;
   }
-  
+
   // Render the buttons of the button group.
   void render() {
     // If the mouse is hovering on the group, set "hovering_button_group"

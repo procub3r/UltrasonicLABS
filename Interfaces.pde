@@ -6,7 +6,7 @@
 class Box {
   // X and Y coordinates, and width and height.
   int x, y, w, h;
-  
+
   // Initialize x, y, w and h.
   Box(int x_, int y_, int w_, int h_) {
     x = x_;
@@ -32,7 +32,7 @@ class Scene {
     hovering_button_group = null;
     hovering_button = null;
   }
-  
+
   // This function is called to render a scene.
   void render() {
     clean_render();  // Clear some state variables to ensure correct functionality.
@@ -45,4 +45,25 @@ class Scene {
     // Must be overridden in classes
     // which inherit from Scene.
   }
+
+  void set_subscene(int id) {
+    // This is a quick hack to make MenuButtonActionHandler to
+    // be able to access the set_subscene method of the Menu subclass.
+  }
+}
+
+// Subscene interface to create subscene objects.
+// Example: display different menu windows within the menu scene.
+interface SubScene {
+  void render();
+}
+
+// Action interface. Used to trigger events
+// on button click. Implementing this interface
+// will allow us to call custom functions when
+// buttons are pressed by assigning every button
+// with an Action.
+interface Action {
+  void on_activate(int id);
+  void on_deactivate(int id);
 }

@@ -14,7 +14,7 @@ void setup() {
 void draw() {
   background(255);  // Set background colour. Specifying only one argument results in a grayscale colour.
   active_scene.render();  // Render the active scene.
-  println(frameRate);  // Print frame rate for debugging.
+  // println(frameRate);  // Print frame rate for debugging.
 }
 
 // Called by processing implicitly during a mousePress event.
@@ -24,12 +24,12 @@ void mousePressed() {
     if (hovering_button_group == null) {
       // If we arent hovering on any group, toggle
       // the activation of a standalone button.
-      hovering_button.active = !hovering_button.active;
+      hovering_button.toggle_activation();
     } else {
       // If we are hovering on a group, deactivate all the buttons
       // in that group, and then activate on the one which we are hovering on.
       hovering_button_group.deactivate();
-      hovering_button.active = true;
+      hovering_button.activate();
     }
   }
 }

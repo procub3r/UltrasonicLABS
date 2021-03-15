@@ -16,8 +16,11 @@ class Menu extends Scene {
     // Initialize button_actions.
     button_action_handler = new MenuButtonActionHandler();
 
+    // All the strings rendered on the buttons.
+    String[] button_strings = {"Dashboard", "Physics", "Chemistry", "Biology", "About"};
+
     // Refer "Buttons.pde" for the argument order.
-    menu_buttons = new ButtonGroup(0, 0, side_panel_width, height, button_action_handler, side_panel_buttons, 0, 10, 30);
+    menu_buttons = new ButtonGroup(0, 0, side_panel_width, height, button_action_handler, button_strings, side_panel_buttons, 0, 10, 30);
 
     // Initialize subscenes.
     subscenes = new SubScene[side_panel_buttons];
@@ -40,6 +43,8 @@ class Menu extends Scene {
     noStroke();  // So that the buttons don't have borders.
     fill(#1a2c42);  // Background colour of the sidepanel.
     rect(0, 0, side_panel_width, height);  // Draw sidepanel background.
+    textAlign(CENTER, CENTER);
+    textSize(32);
     menu_buttons.render();  // Render the menu buttons.
   }
 

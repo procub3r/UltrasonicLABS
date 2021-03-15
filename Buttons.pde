@@ -1,4 +1,4 @@
-ButtonGroup hovering_button_group;  // The button group on which the mouse is being hovered on. //<>// //<>//
+ButtonGroup hovering_button_group;  // The button group on which the mouse is being hovered on. //<>// //<>// //<>//
 Button hovering_button;  // The button on which the mouse is being hovered on.
 
 class Button extends Box {
@@ -6,11 +6,13 @@ class Button extends Box {
   boolean active;  // Determines if a button is active or not.
   Action action;  // To trigger an event on being pressed.
   int id;  // Identifier of the button to figure out which action it corresponds to.
+  String text;
 
-  Button(int x, int y, int w, int h, Action action_, int id_) {
+  Button(int x, int y, int w, int h, Action action_, int id_, String text_) {
     super(x, y, w, h);  // Constructor of the base class "Box".
     action = action_;
     id = id_;
+    text = text_;
 
     // Initialize colours.
     active_c = color(#be2f29);
@@ -62,6 +64,8 @@ class Button extends Box {
     noStroke();  // Button won't have borders.
     fill(fill_c);  // Set the button's colour.
     rect(x, y, w, h, 10);  // Draw the button itself as a rectangle.
+    fill(#0c1115);
+    text(text, x + w / 2, y + h / 2 - 5);
   }
 }
 
@@ -73,7 +77,7 @@ class ButtonGroup extends Box {
   int n;  // Number of buttons in the group.
   Button[] buttons;  // The array which contains the buttons.
 
-  ButtonGroup(int x, int y, int w, int h, Action action_handler, int n_, int default_active, int px, int py) {
+  ButtonGroup(int x, int y, int w, int h, Action action_handler, String[] text_array, int n_, int default_active, int px, int py) {
     super(x, y, w, h);  // Constructor of the base class "Box".
     n = n_;
 
@@ -82,7 +86,7 @@ class ButtonGroup extends Box {
     int b_w = w - (2 * px);
     int b_h = (h - ((n + 1) * py)) / n;
     for (int i = 0; i < buttons.length; i++) {
-      buttons[i] = new Button(x + px, y + (i + 1) * py + (i * b_h), b_w, b_h, action_handler, i);
+      buttons[i] = new Button(x + px, y + (i + 1) * py + (i * b_h), b_w, b_h, action_handler, i, text_array[i]);
     }
 
     // Set a button to be active by default. The button which is activated determines on

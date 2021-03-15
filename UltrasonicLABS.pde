@@ -1,13 +1,18 @@
 // "active_scene" is a reference to the currently active scene.
 Scene active_scene, menu;
 
+int scroll_speed;  // Sets the speed of scrolling.
+PImage text;
+
 // The setup code is run once before the main program starts.
 void setup() {
-  size(1200, 600);  // Set sizeo f the window (in pixels).
+  size(1200, 600);  // Set size of the window (in pixels).
   frameRate(20);  // Set low framerate to monitor system resources for debugging.
+  scroll_speed = 25;  // Set scroll_speed to 5 pixels per scroll event;
 
   menu = new Menu();  // Create a new Menu Scene.
   active_scene = menu;  // Set the active scene to be a Menu scene by default.
+  text = loadImage("text.jpg");
 }
 
 // This function is called implicitly by processing during every frame of animation.
@@ -15,6 +20,10 @@ void draw() {
   background(255);  // Set background colour. Specifying only one argument results in a grayscale colour.
   active_scene.render();  // Render the active scene.
   // println(frameRate);  // Print frame rate for debugging.
+}
+
+void mouseWheel(MouseEvent e) {
+  g_active_subscene.scroll_offset -= e.getCount() * scroll_speed;
 }
 
 // Called by processing implicitly during a mousePress event.

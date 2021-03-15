@@ -61,7 +61,7 @@ class Button extends Box {
     // Finally, render the button.
     noStroke();  // Button won't have borders.
     fill(fill_c);  // Set the button's colour.
-    rect(x, y, w, h);  // Draw the button itself as a rectangle.
+    rect(x, y, w, h, 10);  // Draw the button itself as a rectangle.
   }
 }
 

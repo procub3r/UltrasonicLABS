@@ -8,7 +8,8 @@ PImage text;
 void setup() {
   size(1200, 600);  // Set size of the window (in pixels).
   frameRate(20);  // Set low framerate to monitor system resources for debugging.
-  scroll_speed = 25;  // Set scroll_speed to 5 pixels per scroll event;
+
+  scroll_speed = 25;  // Set scroll_speed to 25 pixels per scroll event;
 
   menu = new Menu();  // Create a new Menu Scene.
   active_scene = menu;  // Set the active scene to be a Menu scene by default.

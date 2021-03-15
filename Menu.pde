@@ -27,7 +27,7 @@ class Menu extends Scene {
     subscenes[3] = new BioMenu();
     subscenes[4] = new AboutPage();
 
-    active_subscene = subscenes[0];  // Set the active subscene to be the dashboard by default.
+    set_subscene(0);  // Set the active subscene to be the dashboard by default.
   }
 
   // Overrides function of same name in base class "Scene".
@@ -47,12 +47,18 @@ class Menu extends Scene {
   // Called by "MenuButtonActionHandler.on_active()".
   void set_subscene(int id) {
     active_subscene = subscenes[id];
+    g_active_subscene = active_subscene;
   }
 }
 
 // Subscenes:
-class Dashboard implements SubScene {
+class Dashboard extends SubScene {
   void render() {
+
+    image(text, width / 3 + 75, 100 + scroll_offset);
+
+    fill(255);
+    rect(width / 5, 0, 4 * width / 5, 75);
     fill(#0c1115);
     textSize(42);
     textAlign(CENTER, CENTER);
@@ -63,27 +69,27 @@ class Dashboard implements SubScene {
   }
 }
 
-class PhyMenu implements SubScene {
+class PhyMenu extends SubScene {
   void render() {
-    println("Phy Sub-Menu");
+    // println("Phy Sub-Menu");
   }
 }
 
-class ChemMenu implements SubScene {
+class ChemMenu extends SubScene {
   void render() {
-    println("Chem Sub-Menu");
+    // println("Chem Sub-Menu");
   }
 }
 
-class BioMenu implements SubScene {
+class BioMenu extends SubScene {
   void render() {
-    println("Bio Sub-Menu");
+    // println("Bio Sub-Menu");
   }
 }
 
-class AboutPage implements SubScene {
+class AboutPage extends SubScene {
   void render() {
-    println("About Page");
+    // println("About Page");
   }
 }
 

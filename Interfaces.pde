@@ -47,16 +47,27 @@ class Scene {
   }
 
   void set_subscene(int id) {
-    // This is a quick hack to make MenuButtonActionHandler to
-    // be able to access the set_subscene method of the Menu subclass.
+    // This is a quick hack to make MenuButtonActionHandler to be
+    // able to access the set_subscene() method of the Menu subclass.
   }
 }
 
 // Subscene interface to create subscene objects.
 // Example: display different menu windows within the menu scene.
-interface SubScene {
-  void render();
+class SubScene {
+  int scroll_offset;
+  
+  SubScene() {
+    scroll_offset = 0;
+  }
+  
+  void render() {}
 }
+
+// Currently active sub-scene. This will
+// be used to send the scroll event to the
+// appropriate sub-scene.
+SubScene g_active_subscene;  // g_ prefix to indicate the global nature of the object.
 
 // Action interface. Used to trigger events
 // on button click. Implementing this interface
